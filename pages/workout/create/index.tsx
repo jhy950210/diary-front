@@ -29,13 +29,13 @@ export default function WokkoutForm() {
       <hr />
       <p>
        운동 부위:
-        <label><input type="radio" name={workout.part} value="back" checked={workout.part === 'back'} onChange={onChangeWorkoutPart}/> 등</label>
-        <label><input type="radio" name={workout.part} value="shoulder" checked={workout.part === 'shoulder'} onChange={onChangeWorkoutPart} /> 어깨</label>
-        <label><input type="radio" name={workout.part} value="leg" checked={workout.part === 'leg'} onChange={onChangeWorkoutPart}/> 하체</label>
+        <label><input type="radio" name="workoutPart" value="back" checked={workout.part === 'back'} onChange={onChangeWorkoutPart}/> 등</label>
+        <label><input type="radio" name="workoutPart" value="shoulder" checked={workout.part === 'shoulder'} onChange={onChangeWorkoutPart} /> 어깨</label>
+        <label><input type="radio" name="workoutPart" value="leg" checked={workout.part === 'leg'} onChange={onChangeWorkoutPart}/> 하체</label>
       </p>
       <hr />
       <label>
-        운동 종목: <input name={workout.name} onChange={onChangeWorkoutName}/>
+        운동 종목: <input name="workoutName" value={workout.name} onChange={onChangeWorkoutName}/>
       </label>
       <hr />
   
