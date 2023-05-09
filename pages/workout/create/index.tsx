@@ -1,44 +1,44 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import { FormEvent } from 'react';
 
-const inter = Inter({ subsets: ['latin'] })
+import { useCallback, useState } from 'react';
 
-export default function MyForm() {
-  function handleSubmit(e: { preventDefault: () => void; target: any; }) {
-    // Prevent the browser from reloading the page
-    e.preventDefault();
+export default function WokkoutForm() {
+  const [ workout, setWorkout] = useState({
+    name: "",
+    part: "",
+  });
 
-    // Read the form data
-    const form = e.target;
-    const formData = new FormData(form);
+  //input에 입력될 때마다 state값 변경되게 하는 함수
+  const onChangeWorkoutName = (e: { target: { name: any; value: any; }; }) => {
+    setWorkout({...workout, name: e.target.value });
+  };
 
-    const formJson = Object.fromEntries(formData.entries());
-    
-    let message = "";
-    for(const value in formJson){
-      message += value + ": " + formJson[value] + "\n";
-    }
-    alert(message);
+  const onChangeWorkoutPart = (e: { target: { name: any; value: any; }; }) => {
+    setWorkout({ ...workout, part: e.target.value });
+  };
+  
+  
+  function handleSubmit() {
+    alert(
+      "운동 부위 : " + workout.part + "\n" +
+      "운동 종목 : " + workout.name
+    );
   }
 
   return (
     <form method="post" onSubmit={handleSubmit}>
-      <label>
-        Text input: <input name="myInput" defaultValue="Some initial value" />
-      </label>
-      <hr />
-      <label>
-        Checkbox: <input type="checkbox" name="myCheckbox" defaultChecked={true} />
-      </label>
       <hr />
       <p>
-        Radio buttons:
-        <label><input type="radio" name="myRadio" value="option1" /> Option 1</label>
-        <label><input type="radio" name="myRadio" value="option2" defaultChecked={true} /> Option 2</label>
-        <label><input type="radio" name="myRadio" value="option3" /> Option 3</label>
+       운동 부위:
+        <label><input type="radio" name={workout.part} value="back" checked={workout.part === 'back'} onChange={onChangeWorkoutPart}/> 등</label>
+        <label><input type="radio" name={workout.part} value="shoulder" checked={workout.part === 'shoulder'} onChange={onChangeWorkoutPart} /> 어깨</label>
+        <label><input type="radio" name={workout.part} value="leg" checked={workout.part === 'leg'} onChange={onChangeWorkoutPart}/> 하체</label>
       </p>
       <hr />
+      <label>
+        운동 종목: <input name={workout.name} onChange={onChangeWorkoutName}/>
+      </label>
+      <hr />
+  
       <button type="reset">Reset form</button>
       <button type="submit">Submit form</button>
     </form>
