@@ -1,7 +1,7 @@
 
-import { useCallback, useState } from 'react';
+import { FormEvent, useState } from 'react';
 
-export default function WokkoutForm() {
+export default function WorkoutForm() {
   const [ workout, setWorkout] = useState({
     name: "",
     part: "",
@@ -17,11 +17,36 @@ export default function WokkoutForm() {
   };
   
   
-  function handleSubmit() {
+  function handleSubmit(e:FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
     alert(
       "운동 부위 : " + workout.part + "\n" +
       "운동 종목 : " + workout.name
     );
+
+    const WORKOUTS = "workouts";
+    const workouts = localStorage.getItem(WORKOUTS);
+
+    if(!workouts) {
+      localStorage.setItem(WORKOUTS, JSON.stringify([workout]));
+
+      console.log('localStorage', localStorage.getItem(WORKOUTS));
+
+      return;
+    }
+
+    try {
+      const parsedWorkouts = JSON.parse(workouts) as string[];
+
+      const merged = [...parsedWorkouts, workout];
+
+      localStorage.setItem(WORKOUTS, JSON.stringify(merged));
+
+      console.log('localStorage', localStorage.getItem(WORKOUTS));
+    } catch (error) {
+      alert('error!');
+    }
   }
 
   return (
